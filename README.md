@@ -12,8 +12,7 @@ An open source AirDrop alternative built with [Flutter](https://flutter.dev).
 
 ## Screenshots
 
-![Contacts](screenshot1.png)
-![Chatting](screenshot2.png)
+<img src="screenshot1.png" style="width:400px"> <img src="screenshot2.png" style="width:400px">
 
 
 ## Build

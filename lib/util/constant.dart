@@ -10,9 +10,9 @@ const int BROADCAST_QUIT = 3;
 const int MESSAGE_UNKNOWN = 0;
 const int MESSAGE_TEXT = 1;
 const int MESSAGE_DATA = 2;
-const int MESSAGE_REQUEST_DATA = 3;
-const int MESSAGE_SEND_DATA = 4;
-const int MESSAGE_NOT_SUPPORTED = 5;
+const int MESSAGE_DATA_REQUEST = 3;
+const int MESSAGE_DATA_RESPONSE = 4;
+const int MESSAGE_DATA_EXPIRED = 5;
 
 // message status
 const int STATUS_UNKNOWN = 0;
