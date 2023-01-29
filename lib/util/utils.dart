@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:quick_share/util/constant.dart';
 import 'package:uuid/uuid.dart';
 
@@ -57,16 +58,23 @@ Widget inlineIcon(IconData iconData, ThemeData themeData) {
   return Icon(iconData, size: themeData.textTheme.bodyMedium!.fontSize);
 }
 
-void showSnackBar(Widget content, BuildContext context) {
-  var messenger = ScaffoldMessenger.of(context);
-  messenger.hideCurrentSnackBar();
-  messenger.showSnackBar(
-    SnackBar(
-      content: content,
-      behavior: SnackBarBehavior.floating,
-      dismissDirection: DismissDirection.vertical,
-      backgroundColor: Colors.black.withOpacity(0.8),
-      action: SnackBarAction(label: 'Dismiss', onPressed: () => messenger.hideCurrentSnackBar()),
-    ),
+void showNotice(String content, BuildContext context, {IconData icon = Icons.info_outline, GestureTapCallback? action}) {
+  var themeData = Theme.of(context);
+  showSimpleNotification(
+    Builder(builder: (context) {
+      return ListTile(
+        leading: Icon(icon, size: themeData.textTheme.headlineLarge!.fontSize),
+        title: Text(content, style: const TextStyle(fontWeight: FontWeight.bold)),
+        onTap: () {
+          if (action != null) {
+            action();
+          }
+          OverlaySupportEntry.of(context)?.dismiss();
+        },
+      );
+    }),
+    background: Colors.blue,
+    duration: const Duration(seconds: 5),
+    slideDismissDirection: DismissDirection.horizontal,
   );
 }

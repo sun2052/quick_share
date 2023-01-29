@@ -63,7 +63,7 @@ class ChatDetailPage extends ConsumerWidget {
                       if (DataUtil.sendDataMessage(_contact.address, file)) {
                         _scrollToLast();
                       } else {
-                        _showErrorMsg(context);
+                        _showUnavailableMsg(context);
                       }
                     }
                   });
@@ -98,7 +98,7 @@ class ChatDetailPage extends ConsumerWidget {
                     _editingController.clear();
                     _scrollToLast();
                   } else {
-                    _showErrorMsg(context);
+                    _showUnavailableMsg(context);
                   }
                 },
               ),
@@ -117,8 +117,12 @@ class ChatDetailPage extends ConsumerWidget {
     );
   }
 
-  void _showErrorMsg(BuildContext context) {
-    showSnackBar(Text('"${_contact.name}" Unavailable'), context);
+  void _showUnavailableMsg(BuildContext context) {
+    _showErrorMsg('"${_contact.name}" Unavailable', context);
+  }
+
+  void _showErrorMsg(String msg, BuildContext context) {
+    showNotice(msg, context, icon: Icons.error_outline);
   }
 
   Widget _renderMessage(Message message, ThemeData themeData, BuildContext context) {
@@ -139,24 +143,24 @@ class ChatDetailPage extends ConsumerWidget {
               onTap: () {
                 if (message is TextMessage) {
                   Clipboard.setData(ClipboardData(text: message.content));
-                  showSnackBar(const Text('Message Copied'), context);
+                  _showErrorMsg('Message Copied', context);
                 } else {
                   if (message.incoming) {
                     FilePicker.platform.getDirectoryPath().then((selectedDirectory) {
                       if (selectedDirectory != null) {
                         var fileName = (message as DataMessage).name;
                         if (File('$selectedDirectory/$fileName').existsSync()) {
-                          showSnackBar(const Text('File Already Exists'), context);
+                          _showErrorMsg('File Already Exists', context);
                           return null;
                         }
                         File tmpFile = File('$selectedDirectory/$fileName$TMP_SUFFIX');
                         if (tmpFile.existsSync()) {
-                          showSnackBar(const Text('File Transfer In Progress'), context);
+                          _showErrorMsg('File Transfer In Progress', context);
                           return null;
                         }
                         bool succeeded = DataUtil.sendDataRequest(_contact.address, message.id, tmpFile);
                         if (!succeeded) {
-                          _showErrorMsg(context);
+                          _showUnavailableMsg(context);
                         }
                       }
                     });

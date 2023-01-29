@@ -28,7 +28,7 @@ class ContactsPage extends ConsumerWidget {
         tooltip: 'Discover',
         child: const Icon(Icons.wifi_tethering),
         onPressed: () {
-          showSnackBar(const Text('Discovering Contacts...'), context);
+          showNotice('Discovering Contacts...', context, icon: Icons.wifi_tethering);
           DataUtil.discover();
         },
       ),
