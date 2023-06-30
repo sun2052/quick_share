@@ -74,7 +74,7 @@ void showNotice(String content, BuildContext context, {IconData icon = Icons.inf
       );
     }),
     background: Colors.blue,
-    duration: const Duration(seconds: 5),
+    duration: const Duration(seconds: 3),
     slideDismissDirection: DismissDirection.horizontal,
   );
 }
